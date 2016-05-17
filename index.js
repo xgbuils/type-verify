@@ -1,34 +1,33 @@
-function typeVerify (value, types) {
-    var context = {}
-    return types.some(function (type) {
-        var index = calc(type)
-        if (!this.typeOfValue) {
-            this.typeOfValue = functs[index](value)
-        }
-        return index === 2 ? value instanceof type : this.typeOfValue === type 
-    }, context) ? null : context.typeOfValue
+function typeVerify (value, types, cb) {
+    var actual = {}
+    var matches = types.some(function (type) {
+        var key = calc(type)
+        actual[key] = functs[key](value)
+        return key === 'instance' ? value instanceof type : actual[key] === type
+    })
+    return cb ? cb(matches, value, types, actual) : matches
 }
 
 function calc (type) {
     var typeOfType = typeof type
     if (typeOfType === 'string') {
-        return /^[A-Z]/.test(type) ? 0 : 1
-    } else (typeOfType === 'function') {
-        return 2
+        return /^[A-Z]/.test(type) ? 'object' : 'type'
+    } else if (typeOfType === 'function') {
+        return 'instance'
     }
     throw Error('bad type to check: ', type)
 }
 
-var functs = [
-    function (value) {
+var functs = {
+    object: function (value) {
         return {}.toString.call(value).slice(8, -1)
     },
-    function (value) {
+    type: function (value) {
         return typeof value
     },
-    function (value) {
+    instance: function (value) {
         return value == null ? '' + value : value.constructor.name
     }
-]
+}
 
 module.exports = typeVerify
