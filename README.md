@@ -1,5 +1,8 @@
 # type-verify
 
+### Version 0.1.0
+
+### ---
 I'm looking for a npm module with this features:
 
 1. To be very tiny
