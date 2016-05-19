@@ -23,15 +23,21 @@ describe('typeVerify', function () {
                 var TYPES = ['string', 'object']
                 typeVerify(OBJ, TYPES, cb)
                 expect(cb.calledOnce).to.be.equal(true)
-                expect(cb.calledWith(true, OBJ, TYPES))
+                expect(cb.args[0][0]).to.be.deep.equal(true)
             })
 
             it('if it does not match, callback is called with correct arguments', function () {
-                var NUM = {}
+                var NUM = 5
                 var TYPES = ['string', 'object']
                 typeVerify(NUM, TYPES, cb)
                 expect(cb.calledOnce).to.be.equal(true)
-                expect(cb.calledWith(false, NUM, TYPES, {type: 'number'}))
+                expect(cb.args[0]).to.be.deep.equal([false, NUM, {
+                    object: [],
+                    instance: [],
+                    type: TYPES
+                }, {
+                    type: 'number'
+                }])
             })
         })
     })
@@ -57,6 +63,7 @@ describe('typeVerify', function () {
                 typeVerify(ARR, TYPES, cb)
                 expect(cb.calledOnce).to.be.equal(true)
                 expect(cb.calledWith(true, ARR, TYPES))
+                expect(cb.args[0][0]).to.be.deep.equal(true)
             })
 
             it('if it does not match, callback is called with correct arguments', function () {
@@ -65,7 +72,13 @@ describe('typeVerify', function () {
                 var TYPES = ['Undefined', 'Boolean']
                 typeVerify(a, TYPES, cb)
                 expect(cb.calledOnce).to.be.equal(true)
-                expect(cb.calledWith(false, a, TYPES, {object: 'Object'}))
+                expect(cb.args[0]).to.be.deep.equal([false, a, {
+                    object: TYPES,
+                    instance: [],
+                    type: []
+                }, {
+                    object: 'Object'
+                }])
             })
         })
     })
@@ -95,7 +108,7 @@ describe('typeVerify', function () {
                 var TYPES = [A, B]
                 typeVerify(instance, TYPES, cb)
                 expect(cb.calledOnce).to.be.equal(true)
-                expect(cb.calledWith(true, instance, TYPES))
+                expect(cb.args[0][0]).to.be.deep.equal(true)
             })
 
             it('if it does not match, callback is called with correct arguments', function () {
@@ -107,6 +120,13 @@ describe('typeVerify', function () {
                 typeVerify(instance, TYPES, cb)
                 expect(cb.calledOnce).to.be.equal(true)
                 expect(cb.calledWith(false, instance, TYPES, {instance: 'B'}))
+                expect(cb.args[0]).to.be.deep.equal([false, instance, {
+                    object: [],
+                    instance: ['A', 'C'],
+                    type: []
+                }, {
+                    instance: 'B'
+                }])
             })
         })
     })
