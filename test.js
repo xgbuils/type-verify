@@ -110,4 +110,40 @@ describe('typeVerify', function () {
             })
         })
     })
+
+    describe('empty array', function () {
+        describe('anything is correct', function () {
+            it('returns true with instance of object', function () {
+                function A () {}
+                function B () {}
+                var instance = new B()
+
+                expect(typeVerify(instance, [])).to.be.equal(true)
+            })
+
+            it('returns true with number', function () {
+                expect(typeVerify(6, [])).to.be.equal(true)
+            })
+
+            it('returns true with null', function () {
+                expect(typeVerify(null, [])).to.be.equal(true)
+            })
+
+            it('returns true with undefined', function () {
+                expect(typeVerify(undefined, [])).to.be.equal(true)
+            })
+
+            it('returns true with boolean', function () {
+                expect(typeVerify(true, [])).to.be.equal(true)
+            })
+
+            it('returns true with string', function () {
+                expect(typeVerify('foo', [])).to.be.equal(true)
+            })
+
+            it('returns true with function', function () {
+                expect(typeVerify(function () {}, [])).to.be.equal(true)
+            })
+        })
+    })
 })

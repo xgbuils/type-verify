@@ -4,7 +4,7 @@ function typeVerify (value, types, cb) {
         var key = calc(type)
         actual[key] = functs[key](value)
         return key === 'instance' ? value instanceof type : actual[key] === type
-    })
+    }) || types.length === 0
     return cb ? cb(matches, value, types, actual) : matches
 }
 
