@@ -1,6 +1,6 @@
 function typeVerify (value, types, cb) {
     var actual = {}
-    var expected = {object: [], instance: [], type: []}
+    var expected = {instance: [], type: []}
     var matches = types.some(function (type) {
         var key = calc(type, expected)
         actual[key] = functs[key](value)
@@ -13,7 +13,7 @@ function calc (type, expected) {
     var typeOfType = typeof type
     var key
     if (typeOfType === 'string') {
-        key = /^[A-Z]/.test(type) ? 'object' : 'type'
+        key = 'type'
     } else if (typeOfType === 'function') {
         key = 'instance'
     }
@@ -23,11 +23,8 @@ function calc (type, expected) {
 }
 
 var functs = {
-    object: function (value) {
-        return {}.toString.call(value).slice(8, -1)
-    },
     type: function (value) {
-        return typeof value
+        return {}.toString.call(value).slice(8, -1)
     },
     instance: function (value) {
         return value == null ? '' + value : value.constructor.name
