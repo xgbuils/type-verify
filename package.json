@@ -1,6 +1,6 @@
 {
   "name": "type-verify",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "micro type checker that unifies 3 ways to check type in javascript",
   "main": "index.js",
   "scripts": {
