@@ -1,6 +1,6 @@
 # type-verify
 
-### Version 0.1.0
+### Version 0.2.0
 
 ### ---
 I'm looking for a npm module with this features:
